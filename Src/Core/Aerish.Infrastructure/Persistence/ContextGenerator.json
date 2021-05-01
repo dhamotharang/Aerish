@@ -1,0 +1,24 @@
+{
+	"Entities": {
+		"Path": "../../Aerish.Application/Common/Entities",
+		"Namespaces": [
+			"Aerish.Domain.Entities",
+			"Aerish.Domain.Entities.Parameters",
+			"Aerish.Domain.Entities.Common",
+			"Aerish.Domain.Entities.CalcData",
+			"Aerish.Domain.Entities.Staging"
+		],
+		"ExcludedFiles": [
+			"../../Aerish.Application/Common/Entities/Base/BaseEntity.cs",
+			"../../Aerish.Application/Common/Entities/Base/BaseStagingEntity.cs"
+		]
+	},
+	"IDbContext": {
+		"Name": "IAerishDbContext",
+		"Namespace": "Aerish.Interfaces"
+	},
+	"DbContext": {
+		"Name": "AerishDbContext",
+		"Namespace": "Aerish.Infrastructure.Persistence"
+	}
+}

@@ -1,0 +1,58 @@
+
+HOW TO DO MIGRATION
+
+
+-- this will update local db
+add-migration {name}
+update-database
+
+
+-- comment connection string from appsettings.Development.json
+-- this will update prod db
+
+update-database -migration {name}
+
+Extensions
+https://marketplace.visualstudio.com/items?itemName=PaulHarrington.EditorGuidelines
+
+References
+https://demos.telerik.com/aspnet-core
+https://github.com/dotnet/efcore/releases
+
+https://www.pngguru.com/
+
+https://fontawesome.com/v4.7.0/icons/
+
+
+https://medium.com/@joshyates1980/apply-ssl-t0-azure-web-application-8cc72d886993
+
+https://www.scottbrady91.com/Azure/Cloudflare-Origin-Certificates-and-Azure-App-Services
+
+https://coding.abel.nu/2013/01/merging-expression-trees-to-reuse-in-linq-queries/
+https://stackoverflow.com/a/16838258/403971
+
+
+DECLARE @calcID SMALLINT
+DECLARE @payRunID SMALLINT = 1
+
+SELECT @calcID = CalcID FROM cd.MasterEmployees WHERE RecordStatus = 'Active' AND PayRunID = @payRunID
+SELECT * FROM cd.MasterEmployees WHERE CalcID = @calcID AND PayRunID = @payRunID
+SELECT E.ShortDesc, MEE.Amount, MEE.IsTaxable, MEE.RecordStatus FROM cd.MasterEmployeeEarnings [MEE] INNER JOIN pr.Earnings E ON E.EarningID = MEE.EarningID WHERE CalcID = @calcID AND MEE.PayRunID = @payRunID
+SELECT D.ShortDesc, MED.EmployeeAmount, MED.EmployerAmount, MED.RecordStatus FROM cd.MasterEmployeeDeductions [MED] INNER JOIN pr.Deductions D ON D.DeductionID = MED.DeductionID WHERE CalcID = @calcID AND MED.PayRunID = @payRunID
+
+--SELECT * FROM dbo.JobInstances
+SELECT * FROM dbo.JobInstanceErrors WHERE ProcessInstanceID = (SELECT MAX(ProcessInstanceID) FROM dbo.JobInstances)
+
+SELECT * FROM cd.MasterEmployees
+
+
+Dev Environment Feed
+https://pkgs.dev.azure.com/sprikiwikiltd/_packaging/SprikiwikiLTD/nuget/v3/index.json
+
+
+
+add-migration Init3 -OutputDir "../Aerish.DbMigration/MSSQL"
+
+https://www.telerik.com/support/whats-new/blazor-ui/release-history
+
+https://docs.telerik.com/blazor-ui/components/autocomplete/events#onread

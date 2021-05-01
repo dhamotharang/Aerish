@@ -1,0 +1,118 @@
+﻿@page "/Employee/PayrollRuns"
+
+<style type="text/css">
+    .demo-window {
+        z-index: 44444;
+    }
+</style>
+
+<TelerikLoaderContainer Visible="@IsRequesting"></TelerikLoaderContainer>
+
+<TelerikToolBar>
+    <ToolBarButtonGroup>
+        <ToolBarButton Icon="calculator" OnClick="OnCalculatePayRunClick" Enabled="@CanCalculate">Calculate PayRun</ToolBarButton>
+        <ToolBarButton Icon="reset-sm" Enabled="@CanCalculate">Rollback</ToolBarButton>
+    </ToolBarButtonGroup>
+    
+    <ToolBarTemplateItem>
+        @if (!CanCalculate)
+        {
+            <label>Calculating..</label>
+        }
+    </ToolBarTemplateItem>
+    
+    <ToolBarSpacer />
+    <ToolBarTemplateItem>
+        <TelerikTextBox PlaceHolder="Search"></TelerikTextBox>
+    </ToolBarTemplateItem>
+    <ToolBarSeparator />
+    <ToolBarButton Icon="reload-sm" OnClick="OnReload">Reload</ToolBarButton>
+
+</TelerikToolBar>
+
+<TelerikGrid @ref="grdPayRuns" Data="Data" OnRead="ReadItems" 
+             TotalCount="@Total" Pageable="true" 
+             Width="100%"
+             ScrollMode="@GridScrollMode.Scrollable">
+    <GridColumns>
+        <GridColumn Field="@(nameof(MasterDataSummaryVM.PayRun))" Width="150px">
+            
+            <Template>
+                @{
+                    var item = context as MasterDataSummaryVM;
+
+                    <label>@($"{item.PayRun.PayoutDate:MMM dd, yyyy}")</label>
+                }
+            </Template>
+        </GridColumn>
+        <GridColumn Field="@(nameof(MasterDataSummaryVM.DaysFactor))" Width="100px" Title="Days Factor" DisplayFormat="{0:n2}"></GridColumn>
+        <GridColumn Field="@(nameof(MasterDataSummaryVM.HourlyRate))" Width="100px" Title="Hourly Rate" DisplayFormat="{0:n2}"></GridColumn>
+        <GridColumn Field="@(nameof(MasterDataSummaryVM.DailyRate))" Width="100px" Title="Daily Rate" DisplayFormat="{0:n2}"></GridColumn>
+        <GridColumn Field="@(nameof(MasterDataSummaryVM.MonthlyRate))" Width="100px" Title="Monthly Rate" DisplayFormat="{0:n2}"></GridColumn>
+        <GridColumn Field="@(nameof(MasterDataSummaryVM.TotalTaxableIncome))" Width="180px" Title="Total Taxable Income" DisplayFormat="{0:n2}"></GridColumn>
+        <GridColumn Field="@(nameof(MasterDataSummaryVM.TotalNonTaxableIncome))" Width="190px" Title="Total Non-Taxable Income" DisplayFormat="{0:n2}"></GridColumn>
+        <GridColumn Field="@(nameof(MasterDataSummaryVM.NetTaxableIncome))" Width="200px" Title="Net Taxable Income" DisplayFormat="{0:n2}"></GridColumn>
+        <GridColumn Field="@(nameof(MasterDataSummaryVM.WitholdingTax))" Width="120px" Title="Witholding Tax" DisplayFormat="{0:n2}"></GridColumn>
+        <GridColumn Field="@(nameof(MasterDataSummaryVM.TotalDeduction))" Width="120px" Title="Total Deduction" DisplayFormat="{0:n2}"></GridColumn>
+        <GridColumn Field="@(nameof(MasterDataSummaryVM.NetSalary))" Width="100px" Title="Net Salary" DisplayFormat="{0:n2}"></GridColumn>
+    </GridColumns>
+</TelerikGrid>
+
+<TelerikWindow Class="demo-window" Width="500px" Centered="true" @bind-Visible=@WindowVisible Modal="true">
+    <WindowTitle>
+        <strong>Payroll Run</strong>
+    </WindowTitle>
+    <WindowActions>
+        <WindowAction Name="Close" />
+    </WindowActions>
+    <WindowContent>
+        <TelerikForm Model="@NewCalcPayRun" OnValidSubmit="@OnWindowCalculatePayRun">
+            <FormValidation>
+                <DataAnnotationsValidator></DataAnnotationsValidator>
+            </FormValidation>
+            <FormItems>
+                <FormItem Field="@nameof(NewCalcPayRun.PlanYear)">
+                    <Template>
+                        <label for="PlanYear" class="k-label k-form-label">Plan Year *:</label>
+
+                        <TelerikDropDownList @bind-Value="@NewCalcPayRun.PlanYear"
+                                             Data="@PlanYearData" 
+                                             ValueField="@(nameof(PlanYearBO.Year))"
+                                             TextField="@(nameof(PlanYearBO.Year))"
+                                             DefaultText="-- Select PlanYear --"
+                                             PopupHeight="auto" 
+                                             OnChange="@OnPlanYearChange"
+                                             Width="100%">
+                        </TelerikDropDownList>
+                    </Template>
+                </FormItem>
+                    
+                <FormItem Field="@nameof(NewCalcPayRun.PayRunID)">
+                    <Template>
+                        <label for="PayRuns" class="k-label k-form-label">Pay Run *:</label>
+
+                        <TelerikDropDownList @bind-Value="@NewCalcPayRun.PayRunID"
+                                             Data="@PayRunData"
+                                             ValueField="@(nameof(PayRunVM.PayRunID))"
+                                             TextField="@(nameof(PayRunVM.PayoutDate))"
+                                             DefaultText="-- Select Pay Run --"
+                                             PopupHeight="auto"
+                                             Enabled="@(PayRunData != null && PayRunData.Any())"
+                                             Width="100%">
+                            <ItemTemplate>
+                                @($"{(context as PayRunVM).PayoutDate:MMM dd, yyyy}")
+                            </ItemTemplate>
+                            <ValueTemplate>
+                                @($"{(context as PayRunVM).PayoutDate:MMM dd, yyyy}")
+                            </ValueTemplate>
+                        </TelerikDropDownList>
+                    </Template>
+                </FormItem>
+            </FormItems>
+            <FormButtons>
+                <TelerikButton ButtonType="ButtonType.Submit" Primary="true">Run Calculation</TelerikButton>
+                <TelerikButton ButtonType="ButtonType.Button" OnClick="@OnWindowCalculatePayRunCancelClick">Cancel</TelerikButton>
+            </FormButtons>
+        </TelerikForm>
+    </WindowContent>
+</TelerikWindow>

@@ -1,0 +1,37 @@
+﻿@inherits MainLayoutBase
+
+@layout TelerikLayout
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu @ref="NavMenu" />
+    </div>
+
+    <div class="main">
+        <div class="top-row px-4">
+
+
+            @if (!HasSession)
+            {
+                <TelerikComboBox Data="@Suggestions"
+                                 @bind-Value="@SelectedEmployeeID"
+                                 ValueField="@(nameof(EmployeeSummaryVM.EmployeeID))"
+                                 TextField="@(nameof(EmployeeSummaryVM.FullName))"
+                                 Filterable="true"
+                                 OnRead="@ReadItems"
+                                 OnChange="@OnSelectedEmployee"
+                                 Placeholder="-- Search Employee --"
+                                 ClearButton="true">
+                </TelerikComboBox>
+            }
+            else
+            {
+                <TelerikButton @ref="@btnLogout" OnClick="@Logout">Logout</TelerikButton>
+            }
+        </div>
+
+        <div class="content px-4">
+            @Body
+        </div>
+    </div>
+</div>

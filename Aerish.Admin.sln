@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aerish.Admin.Client", "Src\Presentation\Web App\Aerish.Admin\Aerish.Admin.Client.csproj", "{220A1EA0-2651-4FEB-8A07-40E88BC6C43A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4A2BFE3F-6842-4EE0-9EA5-523D90DF1E5C}"
+	ProjectSection(SolutionItems) = preProject
+		NuGet.Config = NuGet.Config
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{7553BF75-BAE5-425D-99FC-4C1BB454EB98}"
+	ProjectSection(SolutionItems) = preProject
+		Docs\References.txt = Docs\References.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assemblies", "Assemblies", "{60347C96-C433-4201-B530-DBBF7DE394D7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Aerish", "Aerish", "{7966233B-AD10-4E56-A347-F0CE979D054D}"
+	ProjectSection(SolutionItems) = preProject
+		Assemblies\Aerish\Aerish.dll = Assemblies\Aerish\Aerish.dll
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{220A1EA0-2651-4FEB-8A07-40E88BC6C43A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{220A1EA0-2651-4FEB-8A07-40E88BC6C43A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{220A1EA0-2651-4FEB-8A07-40E88BC6C43A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{220A1EA0-2651-4FEB-8A07-40E88BC6C43A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7966233B-AD10-4E56-A347-F0CE979D054D} = {60347C96-C433-4201-B530-DBBF7DE394D7}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {768F6F62-BA79-4022-BEE5-1D083C6BEEE3}
+	EndGlobalSection
+EndGlobal

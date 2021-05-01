@@ -1,0 +1,143 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{8DBE4110-09D1-46C4-B20E-AA61CFB926C9}"
+	ProjectSection(SolutionItems) = preProject
+		ReadMe.md = ReadMe.md
+		Docs\References.txt = Docs\References.txt
+		Docs\SqlQuery_1.sql = Docs\SqlQuery_1.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{D15DED41-81A1-4529-9381-94159606AE22}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Migrations", "Migrations", "{BA81ED34-73D6-4F00-8064-1D1E5F0C548B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{080CE3FD-5057-4930-9357-CE7E099FE545}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		NuGet.Config = NuGet.Config
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{1683CD56-F6C1-485C-AD2F-4527D46BDCF1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{221C1F6F-A888-4A7D-B114-2AA2D780AAF3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Desktop App", "Desktop App", "{CADAFEDF-EF6B-4C93-8251-681BC3249436}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web App", "Web App", "{1DFAD6B1-09E9-450D-9479-8EB6B9B7287B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aerish", "Src\Core\Aerish\Aerish.csproj", "{BE5A7343-669F-4D90-95D5-3483F074B2E1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aerish.Application", "Src\Core\Aerish.Application\Aerish.Application.csproj", "{1FDACF2E-F784-436A-9779-E43BC48A27ED}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aerish.Exports", "Src\Core\Aerish.Exports\Aerish.Exports.csproj", "{3FDD34BB-9C10-49F2-AAAD-68B660ED7BDB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aerish.Imports", "Src\Core\Aerish.Imports\Aerish.Imports.csproj", "{23BC0598-DF48-4161-A5AA-E681BCD81A9F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aerish.Infrastructure", "Src\Core\Aerish.Infrastructure\Aerish.Infrastructure.csproj", "{8701F687-1E6F-4E23-A463-CA7A6A5524A7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aerish.DbMigration.SQLite", "Src\Migrations\Aerish.DbMigration.SQLite\Aerish.DbMigration.SQLite.csproj", "{B4C55139-C76B-454C-92B7-3B5576A21DB8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aerish.DbMigration.SqlServer", "Src\Migrations\Aerish.DbMigration.SqlServer\Aerish.DbMigration.SqlServer.csproj", "{65F39DFC-79B2-44BF-8691-E8A7EA27B731}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aerish.JobConsole", "Src\Presentation\Desktop App\Aerish.JobConsole\Aerish.JobConsole.csproj", "{3D1D2541-A3E4-4D82-868F-8984774F31A0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aerish.WebAPI", "Src\Presentation\Web App\Aerish.WebAPI\Aerish.WebAPI.csproj", "{8C4B1F98-448F-40ED-BCD3-36D7470E662C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aerish.DbMigration.PostgreSQL", "Src\Migrations\Aerish.DbMigration.PostgreSQL\Aerish.DbMigration.PostgreSQL.csproj", "{15BD31E5-D7CA-429A-A7F8-D1014BF46736}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample Imports", "Sample Imports", "{6FC66CA5-3500-4952-967A-DAF3C38E990B}"
+	ProjectSection(SolutionItems) = preProject
+		Docs\Sample Imports\Person.csv = Docs\Sample Imports\Person.csv
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{3C3B7A68-12CC-47BF-9307-DA6AA8352440}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aerish.ImportTests", "Tests\Aerish.ImportTests\Aerish.ImportTests.csproj", "{D363F590-9770-47CE-AD7F-5FCD9F19BF97}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aerish.DbMigration.InMemoryDatabase", "Src\Migrations\Aerish.DbMigration.InMemoryDatabase\Aerish.DbMigration.InMemoryDatabase.csproj", "{E15CA7E7-8A1A-4E4B-82F8-1F726400C5E4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BE5A7343-669F-4D90-95D5-3483F074B2E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE5A7343-669F-4D90-95D5-3483F074B2E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE5A7343-669F-4D90-95D5-3483F074B2E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE5A7343-669F-4D90-95D5-3483F074B2E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FDACF2E-F784-436A-9779-E43BC48A27ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FDACF2E-F784-436A-9779-E43BC48A27ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FDACF2E-F784-436A-9779-E43BC48A27ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FDACF2E-F784-436A-9779-E43BC48A27ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FDD34BB-9C10-49F2-AAAD-68B660ED7BDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FDD34BB-9C10-49F2-AAAD-68B660ED7BDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FDD34BB-9C10-49F2-AAAD-68B660ED7BDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FDD34BB-9C10-49F2-AAAD-68B660ED7BDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23BC0598-DF48-4161-A5AA-E681BCD81A9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23BC0598-DF48-4161-A5AA-E681BCD81A9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23BC0598-DF48-4161-A5AA-E681BCD81A9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23BC0598-DF48-4161-A5AA-E681BCD81A9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8701F687-1E6F-4E23-A463-CA7A6A5524A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8701F687-1E6F-4E23-A463-CA7A6A5524A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8701F687-1E6F-4E23-A463-CA7A6A5524A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8701F687-1E6F-4E23-A463-CA7A6A5524A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4C55139-C76B-454C-92B7-3B5576A21DB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4C55139-C76B-454C-92B7-3B5576A21DB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4C55139-C76B-454C-92B7-3B5576A21DB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4C55139-C76B-454C-92B7-3B5576A21DB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65F39DFC-79B2-44BF-8691-E8A7EA27B731}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65F39DFC-79B2-44BF-8691-E8A7EA27B731}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65F39DFC-79B2-44BF-8691-E8A7EA27B731}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65F39DFC-79B2-44BF-8691-E8A7EA27B731}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D1D2541-A3E4-4D82-868F-8984774F31A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D1D2541-A3E4-4D82-868F-8984774F31A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D1D2541-A3E4-4D82-868F-8984774F31A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D1D2541-A3E4-4D82-868F-8984774F31A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C4B1F98-448F-40ED-BCD3-36D7470E662C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C4B1F98-448F-40ED-BCD3-36D7470E662C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C4B1F98-448F-40ED-BCD3-36D7470E662C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C4B1F98-448F-40ED-BCD3-36D7470E662C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15BD31E5-D7CA-429A-A7F8-D1014BF46736}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15BD31E5-D7CA-429A-A7F8-D1014BF46736}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15BD31E5-D7CA-429A-A7F8-D1014BF46736}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15BD31E5-D7CA-429A-A7F8-D1014BF46736}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D363F590-9770-47CE-AD7F-5FCD9F19BF97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D363F590-9770-47CE-AD7F-5FCD9F19BF97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D363F590-9770-47CE-AD7F-5FCD9F19BF97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D363F590-9770-47CE-AD7F-5FCD9F19BF97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E15CA7E7-8A1A-4E4B-82F8-1F726400C5E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E15CA7E7-8A1A-4E4B-82F8-1F726400C5E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E15CA7E7-8A1A-4E4B-82F8-1F726400C5E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E15CA7E7-8A1A-4E4B-82F8-1F726400C5E4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BA81ED34-73D6-4F00-8064-1D1E5F0C548B} = {D15DED41-81A1-4529-9381-94159606AE22}
+		{1683CD56-F6C1-485C-AD2F-4527D46BDCF1} = {D15DED41-81A1-4529-9381-94159606AE22}
+		{221C1F6F-A888-4A7D-B114-2AA2D780AAF3} = {D15DED41-81A1-4529-9381-94159606AE22}
+		{CADAFEDF-EF6B-4C93-8251-681BC3249436} = {221C1F6F-A888-4A7D-B114-2AA2D780AAF3}
+		{1DFAD6B1-09E9-450D-9479-8EB6B9B7287B} = {221C1F6F-A888-4A7D-B114-2AA2D780AAF3}
+		{BE5A7343-669F-4D90-95D5-3483F074B2E1} = {1683CD56-F6C1-485C-AD2F-4527D46BDCF1}
+		{1FDACF2E-F784-436A-9779-E43BC48A27ED} = {1683CD56-F6C1-485C-AD2F-4527D46BDCF1}
+		{3FDD34BB-9C10-49F2-AAAD-68B660ED7BDB} = {1683CD56-F6C1-485C-AD2F-4527D46BDCF1}
+		{23BC0598-DF48-4161-A5AA-E681BCD81A9F} = {1683CD56-F6C1-485C-AD2F-4527D46BDCF1}
+		{8701F687-1E6F-4E23-A463-CA7A6A5524A7} = {1683CD56-F6C1-485C-AD2F-4527D46BDCF1}
+		{B4C55139-C76B-454C-92B7-3B5576A21DB8} = {BA81ED34-73D6-4F00-8064-1D1E5F0C548B}
+		{65F39DFC-79B2-44BF-8691-E8A7EA27B731} = {BA81ED34-73D6-4F00-8064-1D1E5F0C548B}
+		{3D1D2541-A3E4-4D82-868F-8984774F31A0} = {CADAFEDF-EF6B-4C93-8251-681BC3249436}
+		{8C4B1F98-448F-40ED-BCD3-36D7470E662C} = {1DFAD6B1-09E9-450D-9479-8EB6B9B7287B}
+		{15BD31E5-D7CA-429A-A7F8-D1014BF46736} = {BA81ED34-73D6-4F00-8064-1D1E5F0C548B}
+		{6FC66CA5-3500-4952-967A-DAF3C38E990B} = {8DBE4110-09D1-46C4-B20E-AA61CFB926C9}
+		{D363F590-9770-47CE-AD7F-5FCD9F19BF97} = {3C3B7A68-12CC-47BF-9307-DA6AA8352440}
+		{E15CA7E7-8A1A-4E4B-82F8-1F726400C5E4} = {BA81ED34-73D6-4F00-8064-1D1E5F0C548B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {790879F1-32E4-4AA4-887A-ABC3BBB5FF7B}
+	EndGlobalSection
+EndGlobal

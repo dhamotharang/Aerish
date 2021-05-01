@@ -1,0 +1,43 @@
+﻿@inherits NavMenuBase
+
+<style>
+    .aerish-tree-nav {
+        margin-top: 20px;
+    }
+
+        .aerish-tree-nav ul {
+            padding-inline-start: 10px;
+            color: #fff;
+        }
+
+    .k-treeview .k-in {
+        padding: 4px 2px;
+    }
+</style>
+
+<div class="top-row pl-4 navbar navbar-dark">
+    <a class="navbar-brand" href="">Aerish.Admin</a>
+    <button class="navbar-toggler" @onclick="ToggleNavMenu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <input placeholder="Search Menu" style="width:100%;"
+           value="@SearchMenu"
+           @onchange="@((ChangeEventArgs e) => SearchMenu = e.Value.ToString())" />
+
+    <TelerikTreeView Data="@FlatData"
+                     SelectionMode="@TreeViewSelectionMode.Single"
+                     @bind-SelectedItems="@SelectedNavigations"
+                     Class="aerish-tree-nav">
+        <TreeViewBindings>
+            <TreeViewBinding TextField="@(nameof(NodeItemBO.Text))"
+                             HasChildrenField="@(nameof(NodeItemBO.HasChild))"
+                             ItemsField="@(nameof(NodeItemBO.Children))">
+            </TreeViewBinding>
+            <TreeViewBinding Level="1" TextField="Text"></TreeViewBinding>
+        </TreeViewBindings>
+    </TelerikTreeView>
+</div>
+
