@@ -17,7 +17,6 @@ namespace Aerish.Infrastructure.Persistence.Configurations
         protected override void ConfigureProperty(BasePropertyBuilder<Person> builder)
         {
             builder.Property(a => a.TaxIdNumber).HasMaxLength(11);
-            builder.Property(a => a.EmployeeSysID).IsRequired().HasMaxLength(20);
             builder.Property(a => a.FirstName).IsRequired().HasMaxLength(50);
             builder.Property(a => a.MiddleName).HasMaxLength(50);
             builder.Property(a => a.LastName).IsRequired().HasMaxLength(50);

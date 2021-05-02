@@ -186,7 +186,6 @@ namespace Aerish.DbMigration.SqlServer.Migrations
                 {
                     PersonID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    EmployeeSysID = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     TaxIdNumber = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: true),
                     FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     MiddleName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
@@ -360,7 +359,7 @@ namespace Aerish.DbMigration.SqlServer.Migrations
                 {
                     EmployeeID = table.Column<int>(type: "int", nullable: false),
                     ClientID = table.Column<short>(type: "smallint", nullable: false),
-                    Code = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    EmployeeSysID = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -1480,12 +1479,12 @@ namespace Aerish.DbMigration.SqlServer.Migrations
                 columns: new[] { "ClientID", "JobID", "Name", "DataType", "DefaultValue", "Display", "IsRequired", "MaxLength", "Order" },
                 values: new object[,]
                 {
-                    { (short)1, (short)100, "PlanYear", "short", "2020", "Plan Year", true, null, (short)1 },
-                    { (short)1, (short)100, "PayRunID", "short", null, "Pay Run ID", true, null, (short)2 },
+                    { (short)1, (short)100, "PlanYear", "short", "2021", "Plan Year", true, null, (short)1 },
+                    { (short)1, (short)100, "PayRunID", "short", "1", "Pay Run ID", true, null, (short)2 },
                     { (short)1, (short)100, "PersonID", "int", null, "Person ID", false, null, (short)3 },
                     { (short)1, (short)100, "SpecialGroupID", "int", null, "Special Group ID", false, null, (short)100 },
                     { (short)1, (short)404, "EmployeeID", "int", null, "Employee ID", true, null, (short)0 },
-                    { (short)1, (short)700, "Path", "string", null, "File Path", true, null, (short)0 }
+                    { (short)1, (short)700, "Path", "string", "D:\\Git Workspace\\Personal\\Aerish\\Docs\\Sample Imports", "File Path", true, null, (short)0 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -1549,12 +1548,11 @@ namespace Aerish.DbMigration.SqlServer.Migrations
                 column: "TaskHandlerProviderID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_tbl_Employee_ClientID_Code_EmployeeID",
+                name: "IX_tbl_Employee_ClientID_EmployeeSysID_EmployeeID",
                 schema: "dbo",
                 table: "tbl_Employee",
-                columns: new[] { "ClientID", "Code", "EmployeeID" },
-                unique: true,
-                filter: "[Code] IS NOT NULL");
+                columns: new[] { "ClientID", "EmployeeSysID", "EmployeeID" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_tbl_EmployeeDeduction_ClientID_EmployeeDeductionRefID_EmployeeID_DeductionID",

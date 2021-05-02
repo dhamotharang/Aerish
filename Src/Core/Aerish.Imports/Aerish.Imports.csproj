@@ -10,8 +10,8 @@
     <PackageReference Include="FluentValidation" Version="10.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.5" />
-    <PackageReference Include="TasqR" Version="1.4.18" />
-    <PackageReference Include="TasqR.Extensions.Microsoft.DependencyInjection" Version="1.4.18" />
+    <PackageReference Include="TasqR" Version="1.4.19" />
+    <PackageReference Include="TasqR.Extensions.Microsoft.DependencyInjection" Version="1.4.19" />
     <PackageReference Include="TinyCsvParser" Version="2.6.0" />
     <PackageReference Include="Z.EntityFramework.Extensions.EFCore" Version="5.1.33" />
   </ItemGroup>

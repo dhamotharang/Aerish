@@ -50,7 +50,7 @@ namespace Aerish.Infrastructure.Persistence.Configurations
                 JobID = MainConstants.Job.MainCalc,
                 Name = "PlanYear",
                 Display = "Plan Year",
-                DefaultValue = "2020",
+                DefaultValue = "2021",
                 DataType = InputDataTypeConstants.SmallInt,
                 IsRequired = true,
                 Order = 1
@@ -62,7 +62,7 @@ namespace Aerish.Infrastructure.Persistence.Configurations
                 JobID = MainConstants.Job.MainCalc,
                 Name = "PayRunID",
                 Display = "Pay Run ID",
-                DefaultValue = null,
+                DefaultValue = "1",
                 DataType = InputDataTypeConstants.SmallInt,
                 IsRequired = true,
                 Order = 2
@@ -110,7 +110,8 @@ namespace Aerish.Infrastructure.Persistence.Configurations
                 Name = "Path",
                 Display = "File Path",
                 DataType = InputDataTypeConstants.String,
-                IsRequired = true
+                IsRequired = true,
+                DefaultValue = @"D:\Git Workspace\Personal\Aerish\Docs\Sample Imports"
             });
         }
     }

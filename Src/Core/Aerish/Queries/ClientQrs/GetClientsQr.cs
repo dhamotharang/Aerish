@@ -8,7 +8,7 @@ using TasqR;
 
 namespace Aerish.Queries.ClientQrs
 {
-    public class GetClientQr : ITasq<ClientBO>
+    public class GetClientsQr : ITasq<IEnumerable<ClientBO>>
     {
     }
 }

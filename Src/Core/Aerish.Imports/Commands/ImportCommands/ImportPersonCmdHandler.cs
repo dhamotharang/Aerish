@@ -30,15 +30,16 @@ namespace Aerish.Imports.Commands.ImportCommands
         private readonly IMapper p_Mapper;
         private readonly IAerishDbContext p_DbContext;
         private readonly DbContext p_BaseDbContext;
-
+        private readonly IAppSession p_AppSession;
         private readonly Dictionary<int, IEnumerable<ValidationFailureBO>> errorsPerRow = new Dictionary<int, IEnumerable<ValidationFailureBO>>();
         private List<string> TaxNumbers = null;
 
-        public ImportPersonCmdHandler(IMapper mapper, IAerishDbContext dbContext, DbContext baseDbContext)
+        public ImportPersonCmdHandler(IMapper mapper, IAerishDbContext dbContext, DbContext baseDbContext, IAppSession appSession)
         {
             p_Mapper = mapper;
             p_DbContext = dbContext;
             p_BaseDbContext = baseDbContext;
+            p_AppSession = appSession;
         }
 
         protected override BaseCsvMapping<StagingPersonBO> GetMapping()
@@ -49,6 +50,14 @@ namespace Aerish.Imports.Commands.ImportCommands
                 .MapProperty(2, x => x.FirstName)
                 .MapProperty(3, x => x.MiddleName)
                 .MapProperty(4, x => x.LastName);
+        }
+
+        public override void Initialize(ImportPersonCmd request)
+        {
+            base.Initialize(request);
+
+            // master process will save the context once the handler process is completed
+            ProcessTracker.SaveContext = true;
         }
 
         protected override void StageData(ImportPersonCmd request)
@@ -136,18 +145,35 @@ namespace Aerish.Imports.Commands.ImportCommands
 
         public override StagingPersonBO Run(StagingPersonBO key, ImportPersonCmd request)
         {
+            bool hasError = false;
+
             if (errorsPerRow.ContainsKey(key.RowIndex))
             {
+                hasError = true;
                 key.ValidationFailures = errorsPerRow[key.RowIndex];
             }
 
-            p_DbContext.Persons.Add(new Person
+            if (!hasError)
             {
-
-            });
+                p_DbContext.Employees.Add(new Employee
+                {
+                    ClientID = p_AppSession.ClientID,
+                    EmployeeSysID = key.EmployeeSysID,
+                    N_Person = new Person
+                    {
+                        TaxIdNumber = key.TaxIdNumber,
+                        FirstName = key.FirstName,
+                        MiddleName = key.MiddleName,
+                        LastName = key.LastName,
+                        Birthdate = key.Birthdate,
+                        Gender = key.Gender
+                    }
+                });
+            }
 
             return key;
         }
+
 
         protected override bool Validate(StagingPersonBO entry, int rowIndex, ref List<ValidationFailureBO> validationFailures)
         {

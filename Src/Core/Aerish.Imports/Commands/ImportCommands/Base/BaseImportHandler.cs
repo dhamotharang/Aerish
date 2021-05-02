@@ -23,7 +23,7 @@ namespace Aerish.Imports.Common.Base
     {
         protected IProcessTracker ProcessTracker { get; private set; }
 
-        public override TResponse Initialize(TProcess request)
+        public override void Initialize(TProcess request)
         {
             if (request is BaseImportCommand baseImportCmd)
             {
@@ -32,7 +32,7 @@ namespace Aerish.Imports.Common.Base
 
             StageData(request);
 
-            return base.Initialize(request);
+            base.Initialize(request);
         }
 
         protected abstract void StageData(TProcess request);
@@ -73,8 +73,6 @@ namespace Aerish.Imports.Common.Base
 
             return result;
         }
-
-
 
         protected virtual bool Validate(TKey entry, int rowIndex, ref List<ValidationFailureBO> validationFailures)
         {

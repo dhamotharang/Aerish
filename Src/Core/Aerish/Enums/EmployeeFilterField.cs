@@ -7,7 +7,7 @@ namespace Aerish
     public enum EmployeeFilterField : byte
     {
         None = 0,
-        Code = 1,
+        EmployeeSysID = 1,
         PersonID = 2,
         FullName = 3,
         LastName = 4

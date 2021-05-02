@@ -37,26 +37,37 @@ namespace Aerish.JobConsole
 
         static ConsoleColor commandColor = ConsoleColor.White;
         static ConsoleColor inputColor = ConsoleColor.Gray;
-        static ConsoleColor hintColor = ConsoleColor.Green;
+        static ConsoleColor hintColor = ConsoleColor.Green;  
+
 
         static void Main(string[] args)
         {
+            Console.Title = "Loading..";
+
             var mainService = CreateHostBuilder(args).Build().Services;
             var mainProcessor = mainService.GetService<ITasqR>();
 
+            var clients = mainProcessor.Run(new GetClientsQr());
 
             mainProcessor.OnLog += (sender, proc, args) =>
             {
                 Debug.WriteLine(args.Message);
             };
 
+            if (clients.Count() > 1)
+            {
+                Console.ForegroundColor = commandColor;
+                Console.Write("Enter ClientID: ");
+                Console.ForegroundColor = inputColor;
 
-            Console.ForegroundColor = commandColor;
-            Console.Write("Enter ClientID: ");
-            Console.ForegroundColor = inputColor;
+                if (!short.TryParse(Console.ReadLine(), out ClientID)) throw new AerishException("Invalid client ID parameter");
+            }
+            else if (clients.Count() == 1)
+            {
+                ClientID = clients.Single().ClientID;
+            }
 
-            if (!short.TryParse(Console.ReadLine(), out ClientID)) throw new AerishException("Invalid client ID parameter");
-            var client = mainProcessor.Run(new GetClientQr());
+            var client = clients.SingleOrDefault(a => a.ClientID == ClientID);
 
             short jobID;
             do
@@ -74,6 +85,8 @@ namespace Aerish.JobConsole
                         Debug.WriteLine(args.Message);
                     };
 
+                    Console.Title = client.Name;
+
                     Console.WriteLine($"Welcome to {client.Name} Test Payroll");
                     Console.WriteLine();
 
@@ -90,40 +103,27 @@ namespace Aerish.JobConsole
                     Console.Write("Please enter Job ID (-1 to exit): ");
                     Console.ForegroundColor = inputColor;
 
+                    Console.WriteLine();
+                    Console.Write("> ");
                     string jobInputID = Console.ReadLine();
-
 
                     if (!short.TryParse(jobInputID, out jobID))
                     {
                         jobID = short.MaxValue;
-
-                        Console.WriteLine("Invalid JobID");
-                        Console.Write("Press any key to reset console.");
-                        Console.ReadKey();
-
                         continue;
                     }
 
-                    if (jobID < 1)
-                    {
-                        Console.WriteLine("Exiting..");
-                        Console.Write("Press any key to close.");
-                        Console.ReadKey();
-                        continue;
-                    }
+                    if (jobID < 1) continue;
 
                     var job = processor.Run(new FindJobQr(jobID));
 
                     if (job == null)
                     {
                         jobID = short.MaxValue;
-
-                        Console.WriteLine("Invalid JobID");
-                        Console.Write("Press any key to reset console.");
-                        Console.ReadKey();
-
                         continue;
                     }
+
+                    Console.WriteLine();
 
                     Console.WriteLine($"Job: {job.LongDesc}");
 
@@ -131,7 +131,7 @@ namespace Aerish.JobConsole
                     if (job.JobParameters.Any())
                     {
                         Console.WriteLine("PARAMETERS");
-
+                        Console.WriteLine();
 
                         foreach (var parameter in job.JobParameters)
                         {
@@ -153,9 +153,24 @@ namespace Aerish.JobConsole
                                 Console.Write($"): ");
                                 Console.ForegroundColor = inputColor;
 
-                                param.Value = Console.ReadLine();
+                                if (!string.IsNullOrWhiteSpace(parameter.DefaultValue))
+                                {
+                                    param.Value = parameter.DefaultValue;
 
-                                if (param.Value.Length == 0)
+                                    Console.Write(parameter.DefaultValue);
+                                }
+
+                                Console.WriteLine("");
+                                Console.Write("> ");
+
+                                string newValue = Console.ReadLine();
+
+                                if (!string.IsNullOrWhiteSpace(newValue))
+                                {
+                                    param.Value = newValue;
+                                }
+
+                                if (param.Value?.Length == 0)
                                 {
                                     param.Value = null;
                                 }
@@ -169,6 +184,8 @@ namespace Aerish.JobConsole
                     var cmd = new MasterProcessCmd(jobID, parameters);
 
                     var jobTracker = (IProcessTracker)processor.Run(cmd);
+
+                    Console.WriteLine();
 
                     if (jobTracker.JobErrors().Any())
                     {

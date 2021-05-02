@@ -41,8 +41,8 @@ namespace Aerish.Application.Handlers.Queries.EmployeeQrs
 
             switch (request.FilterField)
             {
-                case EmployeeFilterField.Code:
-                    query = query.Where(a => a.Code == request.Filter);
+                case EmployeeFilterField.EmployeeSysID:
+                    query = query.Where(a => a.EmployeeSysID == request.Filter);
                     break;
                 case EmployeeFilterField.PersonID:
                     int personId = int.Parse(request.Filter);

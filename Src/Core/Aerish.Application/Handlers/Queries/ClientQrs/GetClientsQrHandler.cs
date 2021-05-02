@@ -9,54 +9,44 @@ using System.Threading.Tasks;
 using Aerish.Domain.Models;
 using Aerish.Queries.ClientQrs;
 using AutoMapper;
+using System.Collections.Generic;
+using AutoMapper.QueryableExtensions;
 
 namespace Aerish.Application.Queries.ClientQrs
 {
-    public class GetClientQrHandler : TasqHandler<GetClientQr, ClientBO>
+    public class GetClientsQrHandler : TasqHandler<GetClientsQr, IEnumerable<ClientBO>>
     {
-        protected const string CacheKey = "ClientSession";
+        protected const string CacheKey = "ClientList";
         private readonly IAerishDbContext p_DbContext;
-        private readonly IAppSession p_AppSession;
         private readonly IMemoryCache p_MemoryCache;
         private readonly IMapper p_Mapper;
 
-        public GetClientQrHandler
+        public GetClientsQrHandler
             (
                 IAerishDbContext dbContext,
-                IAppSession appSession,
                 IMemoryCache memoryCache,
                 IMapper mapper
             )
         {
             p_DbContext = dbContext;
-            p_AppSession = appSession;
             p_MemoryCache = memoryCache;
             p_Mapper = mapper;
         }
 
-        public override ClientBO Run(GetClientQr request)
+        public override IEnumerable<ClientBO> Run(GetClientsQr request)
         {
-            var retVal = p_MemoryCache.Get<ClientBO>(CacheKey);
-
-            if (retVal == null)
-            {
-                var client = p_DbContext.Clients
+            var client = p_MemoryCache.GetOrCreate(CacheKey,
+                factory => p_DbContext.Clients
                     .AsNoTracking()
-                    .FirstOrDefault(a => a.ClientID == p_AppSession.ClientID);
+                    .ProjectTo<ClientBO>(p_Mapper.ConfigurationProvider)
+                    .ToArray());
 
-                if (client != null)
-                {
-                    retVal = p_Mapper.Map<ClientBO>(client);
-                    p_MemoryCache.Set(CacheKey, retVal);
-                }
-            }
-
-            if (retVal == null)
+            if (client.Length == 0)
             {
                 throw new AerishNullReferenceException(nameof(Client), "Default Client");
             }
 
-            return retVal;
+            return client;
         }
     }
 }

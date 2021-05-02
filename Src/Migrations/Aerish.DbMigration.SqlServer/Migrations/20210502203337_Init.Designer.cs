@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Aerish.DbMigration.SqlServer.Migrations
 {
     [DbContext(typeof(AerishDbContext))]
-    [Migration("20210501174114_Init")]
+    [Migration("20210502203337_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -772,14 +772,15 @@ namespace Aerish.DbMigration.SqlServer.Migrations
                     b.Property<short>("ClientID")
                         .HasColumnType("smallint");
 
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<string>("EmployeeSysID")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("EmployeeID", "ClientID");
 
-                    b.HasIndex("ClientID", "Code", "EmployeeID")
-                        .IsUnique()
-                        .HasFilter("[Code] IS NOT NULL");
+                    b.HasIndex("ClientID", "EmployeeSysID", "EmployeeID")
+                        .IsUnique();
 
                     b.ToTable("tbl_Employee", "dbo");
                 });
@@ -971,11 +972,6 @@ namespace Aerish.DbMigration.SqlServer.Migrations
 
                     b.Property<DateTime?>("Birthdate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("EmployeeSysID")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -1662,7 +1658,7 @@ namespace Aerish.DbMigration.SqlServer.Migrations
                             JobID = (short)100,
                             Name = "PlanYear",
                             DataType = "short",
-                            DefaultValue = "2020",
+                            DefaultValue = "2021",
                             Display = "Plan Year",
                             IsRequired = true,
                             Order = (short)1
@@ -1673,6 +1669,7 @@ namespace Aerish.DbMigration.SqlServer.Migrations
                             JobID = (short)100,
                             Name = "PayRunID",
                             DataType = "short",
+                            DefaultValue = "1",
                             Display = "Pay Run ID",
                             IsRequired = true,
                             Order = (short)2
@@ -1713,6 +1710,7 @@ namespace Aerish.DbMigration.SqlServer.Migrations
                             JobID = (short)700,
                             Name = "Path",
                             DataType = "string",
+                            DefaultValue = "D:\\Git Workspace\\Personal\\Aerish\\Docs\\Sample Imports",
                             Display = "File Path",
                             IsRequired = true,
                             Order = (short)0

@@ -15,6 +15,11 @@ namespace Aerish.Infrastructure.Persistence.Configurations
             });
         }
 
+        protected override void ConfigureProperty(BasePropertyBuilder<Employee> builder)
+        {
+            builder.Property(a => a.EmployeeSysID).IsRequired().HasMaxLength(20);
+        }
+
         protected override void ConfigureRelationship(BaseRelationshipBuilder<Employee> builder)
         {
             builder.HasOne(a => a.N_Person)
@@ -31,7 +36,7 @@ namespace Aerish.Infrastructure.Persistence.Configurations
             builder.HasIndex(a => new
                 {
                     a.ClientID,
-                    a.Code,
+                    a.EmployeeSysID,
                     a.EmployeeID
                 })
                 .IsUnique(true);

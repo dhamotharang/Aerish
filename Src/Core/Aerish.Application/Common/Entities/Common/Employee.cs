@@ -7,7 +7,7 @@ namespace Aerish.Domain.Entities.Common
 {
     public class Employee : EmployeeKey
     {
-        public string Code { get; set; }
+        public string EmployeeSysID { get; set; }
 
         public Client N_Client { get; set; }
         public Person N_Person { get; set; }

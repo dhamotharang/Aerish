@@ -50,7 +50,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aerish.DbMigration.PostgreS
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample Imports", "Sample Imports", "{6FC66CA5-3500-4952-967A-DAF3C38E990B}"
 	ProjectSection(SolutionItems) = preProject
-		Docs\Sample Imports\Person.csv = Docs\Sample Imports\Person.csv
+		Docs\Sample Imports\BASICPAY_05_03_2021.csv = Docs\Sample Imports\BASICPAY_05_03_2021.csv
+		Docs\Sample Imports\PERSON_05_03_2021.csv = Docs\Sample Imports\PERSON_05_03_2021.csv
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{3C3B7A68-12CC-47BF-9307-DA6AA8352440}"

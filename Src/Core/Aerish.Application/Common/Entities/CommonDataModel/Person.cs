@@ -6,8 +6,6 @@ namespace Aerish.Domain.Entities.Common
     {
         public int PersonID { get; set; }
 
-        public string EmployeeSysID { get; set; }
-
         public string TaxIdNumber { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
