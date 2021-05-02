@@ -35,7 +35,7 @@ using TasqR;
 
 namespace Aerish.Application.Commands.CalcCmds
 {
-    public class MainCalcCmdHandler : TasqHandlerAsync<MainCalcCmd, int, bool>
+    public class MainCalcCmdHandler : TasqHandler<MainCalcCmd, int, bool>
     {
         private IProcessTracker p_ProcessTracker;
         private readonly ITasqR p_Processor;
@@ -61,14 +61,12 @@ namespace Aerish.Application.Commands.CalcCmds
             p_DbContext = dbContext;
         }
 
-        public override Task InitializeAsync(MainCalcCmd request, CancellationToken cancellationToken = default)
+        public override void Initialize(MainCalcCmd request)
         {
             p_ProcessTracker = (IProcessTracker)request.ProcessTracker;
-
-            return Task.CompletedTask;
         }
 
-        public async override Task<IEnumerable> SelectionCriteriaAsync(MainCalcCmd request, CancellationToken cancellationToken = default)
+        public override IEnumerable SelectionCriteria(MainCalcCmd request)
         {
             int? personIDInParam = p_ProcessTracker.Parameters.GetAs<int?>("PersonID");
 
@@ -77,13 +75,13 @@ namespace Aerish.Application.Commands.CalcCmds
                 return new[] { personIDInParam.GetValueOrDefault() };
             }
 
-            return await p_DbContext.Employees
+            return p_DbContext.Employees
                 .Where(a => a.ClientID == p_AppSession.ClientID)
                 .Select(a => a.EmployeeID)
-                .ToListAsync();
+                .ToList();
         }
 
-        public async override Task<bool> RunAsync(int key, MainCalcCmd request, CancellationToken cancellationToken = default)
+        public override bool Run(int key, MainCalcCmd request)
         {
             short planYear = p_ProcessTracker.PlanYear.GetValueOrDefault();
             short payPeriodID = p_ProcessTracker.PayRunID.GetValueOrDefault();
@@ -92,14 +90,14 @@ namespace Aerish.Application.Commands.CalcCmds
 
             try
             {
-                p_PayPeriod = await p_Processor.RunAsync(new FindPayRunQr(planYear, payPeriodID));
+                p_PayPeriod = p_Processor.Run(new FindPayRunQr(planYear, payPeriodID));
 
                 if (p_PayPeriod == null)
                 {
                     throw new AerishException($"Invalid pay period ({planYear} - {payPeriodID}) for client: {p_AppSession.ClientID}");
                 }
 
-                p_OldMasterData = await p_Processor.RunAsync(new GetPreviousMasterDataQr(p_PayPeriod.PlanYear, p_PayPeriod.PayRunID, key));
+                p_OldMasterData = p_Processor.Run(new GetPreviousMasterDataQr(p_PayPeriod.PlanYear, p_PayPeriod.PayRunID, key));
 
                 if (p_OldMasterData != null)
                 {
