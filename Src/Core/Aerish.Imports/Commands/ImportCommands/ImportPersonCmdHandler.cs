@@ -29,16 +29,18 @@ namespace Aerish.Imports.Commands.ImportCommands
     public class ImportPersonCmdHandler : BaseImportHandler<ImportPersonCmd, StagingPersonBO, StagingPersonBO>
     {
         private readonly IMapper p_Mapper;
-        private readonly IAerishDbContext p_DbContext;
-        private readonly IAppSession p_AppSession;
         private readonly Dictionary<int, IEnumerable<ValidationFailureBO>> errorsPerRow = new Dictionary<int, IEnumerable<ValidationFailureBO>>();
-        private List<string> TaxNumbers = null;
+        private List<string> taxNumbers = null;
 
-        public ImportPersonCmdHandler(IMapper mapper, IAerishDbContext dbContext, IAppSession appSession)
+        protected IEnumerable<string> TaxNumbers
+        {
+            get => taxNumbers ?? (taxNumbers = DbContext.Persons.Select(a => a.TaxIdNumber).ToList());
+        }
+
+        public ImportPersonCmdHandler(IAerishDbContext dbContext, IAppSession appSession, IMapper mapper)
+            : base(dbContext, appSession)
         {
             p_Mapper = mapper;
-            p_DbContext = dbContext;
-            p_AppSession = appSession;
         }
 
         protected override BaseCsvMapping<StagingPersonBO> GetMapping()
@@ -106,12 +108,12 @@ namespace Aerish.Imports.Commands.ImportCommands
                             .ForEach(error =>
                             {
                                 errorCount++;
-                                p_DbContext.ValidationFailures.Add(error);
+                                DbContext.ValidationFailures.Add(error);
                             });
                     }
                 }
 
-                p_DbContext.StagingPersons.Add(each);
+                DbContext.StagingPersons.Add(each);
             }
 
             ProcessTracker.LogMessage("Records Count: {0}", recordCount);
@@ -119,7 +121,7 @@ namespace Aerish.Imports.Commands.ImportCommands
 
             try
             {
-                p_DbContext.BulkSaveChanges();
+                DbContext.BulkSaveChanges();
             }
             catch (Exception ex)
             {
@@ -135,7 +137,7 @@ namespace Aerish.Imports.Commands.ImportCommands
                 return new List<StagingPersonBO>();
             }
 
-            return p_DbContext.StagingPersons
+            return DbContext.StagingPersons
                 .Where(a => a.ProcessInstanceID == ProcessTracker.ProcessInstanceID)
                 .ProjectTo<StagingPersonBO>(p_Mapper.ConfigurationProvider)
                 .OrderBy(a => a.RowIndex)
@@ -154,9 +156,9 @@ namespace Aerish.Imports.Commands.ImportCommands
 
             if (!hasError)
             {
-                p_DbContext.Employees.Add(new Employee
+                DbContext.Employees.Add(new Employee
                 {
-                    ClientID = p_AppSession.ClientID,
+                    ClientID = AppSession.ClientID,
                     EmployeeSysID = key.EmployeeSysID,
                     N_Person = new Person
                     {
@@ -164,7 +166,7 @@ namespace Aerish.Imports.Commands.ImportCommands
                         FirstName = key.FirstName,
                         MiddleName = key.MiddleName,
                         LastName = key.LastName,
-                        Birthdate = CommonUtility.DateTimeUtility.ParseDateTime(key.Birthdate),
+                        Birthdate = CommonUtility.DateTimeUtility.ParseDateTimeOrNull(key.Birthdate),
                         Gender = CommonUtility.EnumUtility.TryParseEnumOrNull<Gender>(key.Gender)
                     }
                 });
@@ -178,11 +180,7 @@ namespace Aerish.Imports.Commands.ImportCommands
         {
             bool isValid = base.Validate(entry, rowIndex, ref validationFailures);
 
-            if (TaxNumbers == null)
-            {
-                TaxNumbers = p_DbContext.Persons.Select(a => a.TaxIdNumber).ToList();
-            }
-
+            
             if (TaxNumbers.Contains(entry.TaxIdNumber))
             {
                 isValid = false;

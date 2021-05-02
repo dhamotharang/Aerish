@@ -21,7 +21,24 @@ namespace Aerish.Imports.Common.Base
         where TProcess : ITasq<TKey, TResponse>
         where TKey : class, new()
     {
+        private Dictionary<string, int> employeeIds = null;
+
         protected IProcessTracker ProcessTracker { get; private set; }
+        protected IAerishDbContext DbContext { get; }
+        protected IAppSession AppSession { get; }
+
+        protected Dictionary<string, int> EmployeeIDs
+        {
+            get => employeeIds ?? (employeeIds = DbContext.Employees
+                .Select(a => new { a.EmployeeSysID, a.EmployeeID })
+                .ToDictionary(a => a.EmployeeSysID, a => a.EmployeeID));
+        }
+
+        protected BaseImportHandler(IAerishDbContext dbContext, IAppSession appSession)
+        {
+            DbContext = dbContext;
+            AppSession = appSession;
+        }
 
         public override void Initialize(TProcess request)
         {

@@ -16,32 +16,89 @@ using Aerish.Application;
 using AutoMapper;
 
 using FluentValidation;
+using AutoMapper.QueryableExtensions;
+using Aerish.Domain.Entities.Parameters;
 
 namespace Aerish.Imports.Commands.ImportCommands
 {
     public class ImportBasicPayCmdHandler : BaseImportHandler<ImportBasicPayCmd, StagingBasicPayBO, StagingBasicPayBO>
     {
         private readonly IMapper p_Mapper;
-        private readonly IAerishDbContext p_DbContext;
-        private readonly IAppSession p_AppSession;
-        private List<string> EmployeeSysIDs = null;
         private readonly Dictionary<int, IEnumerable<ValidationFailureBO>> errorsPerRow = new Dictionary<int, IEnumerable<ValidationFailureBO>>();
 
-        public ImportBasicPayCmdHandler(IMapper mapper, IAerishDbContext dbContext, IAppSession appSession)
+        
+
+
+        public ImportBasicPayCmdHandler(IAerishDbContext dbContext, IAppSession appSession, IMapper mapper) 
+            : base(dbContext, appSession)
         {
             p_Mapper = mapper;
-            p_DbContext = dbContext;
-            p_AppSession = appSession;
+        }
+
+        public override void Initialize(ImportBasicPayCmd request)
+        {
+            base.Initialize(request);
+
+            // master process will save the context once the handler process is completed
+            ProcessTracker.SaveContext = true;
         }
 
         public override StagingBasicPayBO Run(StagingBasicPayBO key, ImportBasicPayCmd request)
         {
-            throw new NotImplementedException();
+            bool hasError = false;
+
+            if (errorsPerRow.ContainsKey(key.RowIndex))
+            {
+                hasError = true;
+                key.ValidationFailures = errorsPerRow[key.RowIndex];
+            }
+
+            if (!hasError)
+            {
+                var newBasicPay = new BasicPay
+                {
+                    Amount = key.Amount,
+                    ClientID = AppSession.ClientID,
+                    EmployeeID = EmployeeIDs[key.EmployeeSysID],
+                    AmountBasis = GetAmountBasis(key.Basis),
+                    Effectivity = CommonUtility.DateTimeUtility.ParseDateTime(key.Effectivity),
+                    PeriodStartID = GetPeriodID(key.PeriodStart).GetValueOrDefault(),
+                    PeriodEndID = GetPeriodID(key.PeriodEnd)
+                };
+
+                DbContext.BasicPays.Add(newBasicPay);
+            }
+
+            return key;
+        }
+
+        public virtual AmountBasis GetAmountBasis(string value)
+        {
+            if (value == "M")
+            {
+                return AmountBasis.Monthly;
+            }
+
+            return AmountBasis.Monthly;
+        }
+
+        public virtual short? GetPeriodID(string periodData)
+        {
+            return 6;
         }
 
         public override IEnumerable SelectionCriteria(ImportBasicPayCmd request)
         {
-            throw new NotImplementedException();
+            if (ProcessTracker.Aborted == true)
+            {
+                return new List<StagingBasicPayBO>();
+            }
+
+            return DbContext.StagingBasicPays
+                .Where(a => a.ProcessInstanceID == ProcessTracker.ProcessInstanceID)
+                .ProjectTo<StagingBasicPayBO>(p_Mapper.ConfigurationProvider)
+                .OrderBy(a => a.RowIndex)
+                .ToList();
         }
 
         protected override BaseCsvMapping<StagingBasicPayBO> GetMapping()
@@ -70,13 +127,10 @@ namespace Aerish.Imports.Commands.ImportCommands
         {
             bool isValid = base.Validate(entry, rowIndex, ref validationFailures);
 
-            if (EmployeeSysIDs == null)
-            {
-                EmployeeSysIDs = p_DbContext.Employees.Select(a => a.EmployeeSysID).ToList();
-            }
+             
 
             if (!string.IsNullOrWhiteSpace(entry.EmployeeSysID)
-                && !EmployeeSysIDs.Contains(entry.EmployeeSysID))
+                && !EmployeeIDs.ContainsKey(entry.EmployeeSysID))
             {
                 isValid = false;
 
@@ -139,12 +193,12 @@ namespace Aerish.Imports.Commands.ImportCommands
                             .ForEach(error =>
                             {
                                 errorCount++;
-                                p_DbContext.ValidationFailures.Add(error);
+                                DbContext.ValidationFailures.Add(error);
                             });
                     }
                 }
 
-                p_DbContext.StagingBasicPays.Add(each);
+                DbContext.StagingBasicPays.Add(each);
             }
 
             ProcessTracker.LogMessage("Records Count: {0}", recordCount);
@@ -152,7 +206,7 @@ namespace Aerish.Imports.Commands.ImportCommands
 
             try
             {
-                p_DbContext.BulkSaveChanges();
+                DbContext.BulkSaveChanges();
             }
             catch (Exception ex)
             {
