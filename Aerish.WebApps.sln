@@ -22,6 +22,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Aerish", "Aerish", "{796623
 		Assemblies\Aerish\Aerish.dll = Assemblies\Aerish\Aerish.dll
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aerish.Client", "Src\Presentation\Web App\Aerish.Client\Aerish.Client.csproj", "{AF66E70A-2F73-423D-9B16-C1A23941618A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{220A1EA0-2651-4FEB-8A07-40E88BC6C43A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{220A1EA0-2651-4FEB-8A07-40E88BC6C43A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{220A1EA0-2651-4FEB-8A07-40E88BC6C43A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF66E70A-2F73-423D-9B16-C1A23941618A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF66E70A-2F73-423D-9B16-C1A23941618A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF66E70A-2F73-423D-9B16-C1A23941618A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF66E70A-2F73-423D-9B16-C1A23941618A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
