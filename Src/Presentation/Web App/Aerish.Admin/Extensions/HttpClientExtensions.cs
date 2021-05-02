@@ -8,7 +8,7 @@ using System.Net.Http.Json;
 
 using Aerish.Domain.Common;
 
-namespace Aerish.Admin.Client
+namespace Aerish.Admin
 {
     public static class HttpClientExtensions
     {

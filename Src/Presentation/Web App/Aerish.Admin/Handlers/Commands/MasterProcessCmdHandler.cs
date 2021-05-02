@@ -7,7 +7,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
-using Aerish.Admin.Client.ViewModels;
+using Aerish.Admin.ViewModels;
 using Aerish.Admin.Shared;
 using Aerish.Commands;
 using Aerish.Constants;
@@ -16,7 +16,7 @@ using Aerish.Interfaces;
 
 using TasqR;
 
-namespace Aerish.Admin.Client.Handlers.Commands
+namespace Aerish.Admin.Handlers.Commands
 {
     public class MasterProcessCmdHandler : TasqHandlerAsync<MasterProcessCmd, IProcessTrackerBase>
     {

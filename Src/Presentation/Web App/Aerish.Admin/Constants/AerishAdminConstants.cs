@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Aerish.Admin.Client
+namespace Aerish.Admin
 {
     public abstract class AerishAdminConstants
     {

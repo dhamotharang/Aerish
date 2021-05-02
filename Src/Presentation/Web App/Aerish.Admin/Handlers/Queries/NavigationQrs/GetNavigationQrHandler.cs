@@ -11,7 +11,7 @@ using Aerish.Queries.NavigationQrs;
 
 using TasqR;
 
-namespace Aerish.Admin.Client.Handlers.Queries.NavigationQrs
+namespace Aerish.Admin.Handlers.Queries.NavigationQrs
 {
     public class GetNavigationQrHandler : TasqHandlerAsync<GetNavigationQr, NodeItemSetBO>
     {

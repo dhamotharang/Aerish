@@ -11,7 +11,7 @@ using Aerish.Admin.Shared;
 
 using Telerik.DataSource;
 
-namespace Aerish.Admin.Client.Services
+namespace Aerish.Admin.Services
 {
     public class RequestResponse<T>
     {

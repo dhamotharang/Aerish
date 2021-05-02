@@ -4,10 +4,10 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-using Aerish.Admin.Client.Services;
-using Aerish.Admin.Client.ViewModels;
+using Aerish.Admin.Services;
 using Aerish.Admin.Shared;
 using Aerish.Admin.Shared.ViewModels;
+using Aerish.Admin.ViewModels;
 using Aerish.Commands;
 using Aerish.Constants;
 using Aerish.Domain.Models;
@@ -21,7 +21,7 @@ using Telerik.Blazor.Components;
 using Telerik.DataSource;
 using Telerik.DataSource.Extensions;
 
-namespace Aerish.Admin.Client.Pages.Employee
+namespace Aerish.Admin.Pages.Employee
 {
     public partial class PayrollRuns
     {

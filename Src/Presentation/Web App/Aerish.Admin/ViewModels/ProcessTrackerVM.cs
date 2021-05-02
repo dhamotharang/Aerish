@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 using Aerish.Interfaces;
 
-namespace Aerish.Admin.Client.ViewModels
+namespace Aerish.Admin.ViewModels
 {
     public class ProcessTrackerVM : IProcessTrackerBase
     {

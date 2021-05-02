@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Aerish.Admin.Client.ViewModels;
+using Aerish.Admin.ViewModels;
 
 namespace Aerish.Admin.Shared.ViewModels
 {

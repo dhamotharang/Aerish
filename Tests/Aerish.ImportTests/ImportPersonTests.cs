@@ -43,8 +43,8 @@ namespace Aerish.ImportTests
                 var dbContext = services.GetService<IAerishDbContext>();
 
                 var data = new StringBuilder()
-                    .AppendLine("TAX_ID,FIRSTNAME,MIDDLENAME,LASTNAME")
-                    .AppendLine("00001,,Gubantes,Dagpin");
+                    .AppendLine("TAX_ID,Employee_ID,FIRSTNAME,MIDDLENAME,LASTNAME")
+                    .AppendLine("00001,1,,Gubantes,Dagpin");
 
                 var mockTracker = new Mock<IProcessTracker>();
 
@@ -83,8 +83,8 @@ namespace Aerish.ImportTests
                 dbContext.SaveChanges();
 
                 var data = new StringBuilder()
-                    .AppendLine("TAX_ID,FIRSTNAME,MIDDLENAME,LASTNAME")
-                    .AppendLine("00001,Vincent,Gubantes,Dagpin");
+                    .AppendLine("TAX_ID,Employee_ID,FIRSTNAME,MIDDLENAME,LASTNAME")
+                    .AppendLine("00001,1,Vincent,Gubantes,Dagpin");
 
                 var mockTracker = new Mock<IProcessTracker>();
 
@@ -152,8 +152,8 @@ namespace Aerish.ImportTests
                 var tasqR = services.GetService<ITasqR>();
 
                 var data = new StringBuilder()
-                    .AppendLine("TAX_ID,FIRSTNAME,MIDDLENAME,LASTNAME")
-                    .AppendLine("00001,Vincent,Gubantes,Dagpin");
+                    .AppendLine("TAX_ID,Employee_ID,FIRSTNAME,MIDDLENAME,LASTNAME")
+                    .AppendLine("00001,1,Vincent,Gubantes,Dagpin");
 
                 var mockTracker = new Mock<IProcessTracker>();
 
@@ -186,9 +186,9 @@ namespace Aerish.ImportTests
                 var tasqR = services.GetService<ITasqR>();
 
                 var data = new StringBuilder()
-                    .AppendLine("TAX_ID,FIRSTNAME,MIDDLENAME,LASTNAME")
+                    .AppendLine("TAX_ID,Employee_ID,FIRSTNAME,MIDDLENAME,LASTNAME")
                     .AppendLine("")
-                    .AppendLine("00001,Vincent,Gubantes,Dagpin")
+                    .AppendLine("00001,1,Vincent,Gubantes,Dagpin")
                     .AppendLine("")
                     .AppendLine("");
 

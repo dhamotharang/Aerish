@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 
-using Aerish.Admin.Client.Services;
+using Aerish.Admin.Services;
 using Aerish.Admin.Shared;
 
 using Blazored.SessionStorage;
@@ -16,7 +16,7 @@ using Telerik.Blazor;
 using Telerik.Blazor.Components;
 using Telerik.DataSource;
 
-namespace Aerish.Admin.Client.Shared
+namespace Aerish.Admin.Shared
 {
     public class MainLayoutBase : LayoutComponentBase
     {

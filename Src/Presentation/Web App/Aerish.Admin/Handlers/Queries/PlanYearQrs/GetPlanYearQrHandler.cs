@@ -12,7 +12,7 @@ using Aerish.Queries.PlanYearQrs;
 
 using TasqR;
 
-namespace Aerish.Admin.Client.Handlers.Queries.PlanYearQrs
+namespace Aerish.Admin.Handlers.Queries.PlanYearQrs
 {
     public class GetPlanYearQrHandler : TasqHandlerAsync<GetPlanYearQr, QueryResult<PlanYearBO>>
     {

@@ -1,3 +1,2 @@
-For SQLite
-
-See connection string and make sure the directory exists for that data file
+1. Service Oriented Architecture
+2. CQRS

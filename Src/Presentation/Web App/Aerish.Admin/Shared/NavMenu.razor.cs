@@ -15,7 +15,7 @@ using Aerish.Queries.NavigationQrs;
 using Aerish.Domain.Models;
 using System.Text.Json;
 
-namespace Aerish.Admin.Client.Shared
+namespace Aerish.Admin.Shared
 {
     public class NavMenuBase : ComponentBase
     {

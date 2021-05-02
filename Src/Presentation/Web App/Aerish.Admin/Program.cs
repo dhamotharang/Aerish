@@ -1,4 +1,4 @@
-using Aerish.Admin.Client.Services;
+using Aerish.Admin.Services;
 using Aerish.Admin.Shared;
 
 using Blazored.LocalStorage;
@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 using TasqR;
 
-namespace Aerish.Admin.Client
+namespace Aerish.Admin
 {
     public class Program
     {
