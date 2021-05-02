@@ -1169,6 +1169,40 @@ namespace Aerish.DbMigration.SqlServer.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "tbl_StagingBasicPay",
+                schema: "stg",
+                columns: table => new
+                {
+                    ID = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EmployeeSysID = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    PeriodStart = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PeriodEnd = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Amount = table.Column<decimal>(type: "DECIMAL(20,6)", nullable: false),
+                    Basis = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Effectivity = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LoadStatus = table.Column<byte>(type: "tinyint", nullable: false),
+                    RowIndex = table.Column<int>(type: "int", nullable: false),
+                    ImportIsValid = table.Column<bool>(type: "bit", nullable: false),
+                    Err_ColumnIndex = table.Column<int>(type: "int", nullable: true),
+                    Err_Value = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Err_UnmappedRow = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ValidationIsValid = table.Column<bool>(type: "bit", nullable: false),
+                    ProcessInstanceID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tbl_StagingBasicPay", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_tbl_StagingBasicPay_tbl_ProcessInstance_ProcessInstanceID",
+                        column: x => x.ProcessInstanceID,
+                        principalSchema: "dbo",
+                        principalTable: "tbl_ProcessInstance",
+                        principalColumn: "ProcessInstanceID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "tbl_StagingPerson",
                 schema: "stg",
                 columns: table => new
@@ -1180,8 +1214,8 @@ namespace Aerish.DbMigration.SqlServer.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MiddleName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Birthdate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Gender = table.Column<byte>(type: "tinyint", nullable: true),
+                    Birthdate = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LoadStatus = table.Column<byte>(type: "tinyint", nullable: false),
                     RowIndex = table.Column<int>(type: "int", nullable: false),
                     ImportIsValid = table.Column<bool>(type: "bit", nullable: false),
@@ -1282,7 +1316,8 @@ namespace Aerish.DbMigration.SqlServer.Migrations
                 values: new object[,]
                 {
                     { 401, null, null, "Aerish, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null", "Aerish.Commands.LoanCmds.CompanyLoans.HMOPremiumPayableLoanCmd" },
-                    { 2000, null, null, "Aerish, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null", "Aerish.Imports.Commands.ImportPersonCmd" },
+                    { 2001, null, null, "Aerish, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null", "Aerish.Commands.Imports.ImportBasicPayCmd" },
+                    { 2000, null, null, "Aerish, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null", "Aerish.Commands.Imports.ImportPersonCmd" },
                     { 1001, null, null, "Aerish, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null", "Aerish.Commands.RollbackEmployeeCmd" },
                     { 302, "Aerish.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null", "Aerish.Application.Commands.DeductionCmds.Contributions.PhilHealthContributionDeductionCmdHandler", "Aerish, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null", "Aerish.Commands.DeductionCmds.Contributions.ContributionDeductionCmd" },
                     { 301, "Aerish.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null", "Aerish.Application.Commands.DeductionCmds.Contributions.PagIBIGContributionDeductionCmdHandler", "Aerish, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null", "Aerish.Commands.DeductionCmds.Contributions.ContributionDeductionCmd" },
@@ -1369,9 +1404,10 @@ namespace Aerish.DbMigration.SqlServer.Migrations
                 columns: new[] { "ClientID", "JobID", "AltDesc", "IsEnabled", "LongDesc", "ShortDesc", "TaskHandlerProviderID" },
                 values: new object[,]
                 {
+                    { (short)1, (short)700, null, true, "Import Person Data", "Import Person Data", 2000 },
+                    { (short)1, (short)710, null, true, "Import Basic Pay Data", "Import Basic Pay Data", 2001 },
                     { (short)1, (short)100, null, true, "Main Calc", "Main Calc", 1000 },
-                    { (short)1, (short)404, null, true, "Rollback Employee", "Rollback Employee", 1001 },
-                    { (short)1, (short)700, null, true, "Import Person Data", "Import Person Data", 2000 }
+                    { (short)1, (short)404, null, true, "Rollback Employee", "Rollback Employee", 1001 }
                 });
 
             migrationBuilder.InsertData(
@@ -1396,17 +1432,17 @@ namespace Aerish.DbMigration.SqlServer.Migrations
                 columns: new[] { "PeriodID", "AltDesc", "IsEveryPayroll", "IsNeedPayoutPlace", "LongDesc", "Order", "PaymentModeID", "ShortDesc" },
                 values: new object[,]
                 {
-                    { (short)27, null, false, true, "December", (short)0, (short)6, "December" },
-                    { (short)26, null, false, true, "November", (short)0, (short)6, "November" },
-                    { (short)25, null, false, true, "October", (short)0, (short)6, "October" },
-                    { (short)24, null, false, true, "September", (short)0, (short)6, "September" },
-                    { (short)22, null, false, true, "July", (short)0, (short)6, "July" },
-                    { (short)21, null, false, true, "June", (short)0, (short)6, "June" },
-                    { (short)20, null, false, true, "May", (short)0, (short)6, "May" },
-                    { (short)19, null, false, true, "April", (short)0, (short)6, "April" },
-                    { (short)18, null, false, true, "March", (short)0, (short)6, "March" },
                     { (short)17, null, false, true, "February", (short)0, (short)6, "February" },
+                    { (short)18, null, false, true, "March", (short)0, (short)6, "March" },
+                    { (short)19, null, false, true, "April", (short)0, (short)6, "April" },
+                    { (short)20, null, false, true, "May", (short)0, (short)6, "May" },
+                    { (short)21, null, false, true, "June", (short)0, (short)6, "June" },
+                    { (short)24, null, false, true, "September", (short)0, (short)6, "September" },
+                    { (short)25, null, false, true, "October", (short)0, (short)6, "October" },
+                    { (short)26, null, false, true, "November", (short)0, (short)6, "November" },
+                    { (short)27, null, false, true, "December", (short)0, (short)6, "December" },
                     { (short)16, null, false, true, "January", (short)0, (short)6, "January" },
+                    { (short)22, null, false, true, "July", (short)0, (short)6, "July" },
                     { (short)5, null, true, false, "Every Payroll", (short)1, (short)5, "Every Payroll" },
                     { (short)23, null, false, true, "August", (short)0, (short)6, "August" },
                     { (short)9, null, false, false, "Second Half", (short)2, (short)3, "Second Half" },
@@ -1419,8 +1455,7 @@ namespace Aerish.DbMigration.SqlServer.Migrations
                     { (short)14, null, false, false, "Third Week", (short)3, (short)1, "Third Week" },
                     { (short)1, null, false, false, "First Payroll", (short)1, (short)2, "First Payroll" },
                     { (short)2, null, false, false, "Third Payroll", (short)3, (short)2, "Third Payroll" },
-                    { (short)3, null, true, false, "Every Payroll", (short)4, (short)2, "Every Payroll" },
-                    { (short)4, null, false, false, "Second Payroll", (short)2, (short)2, "Second Payroll" }
+                    { (short)3, null, true, false, "Every Payroll", (short)4, (short)2, "Every Payroll" }
                 });
 
             migrationBuilder.InsertData(
@@ -1429,6 +1464,7 @@ namespace Aerish.DbMigration.SqlServer.Migrations
                 columns: new[] { "PeriodID", "AltDesc", "IsEveryPayroll", "IsNeedPayoutPlace", "LongDesc", "Order", "PaymentModeID", "ShortDesc" },
                 values: new object[,]
                 {
+                    { (short)4, null, false, false, "Second Payroll", (short)2, (short)2, "Second Payroll" },
                     { (short)7, null, true, false, "Every Payroll", (short)3, (short)3, "Every Payroll" },
                     { (short)8, null, false, false, "First Half", (short)1, (short)3, "First Half" }
                 });
@@ -1484,7 +1520,8 @@ namespace Aerish.DbMigration.SqlServer.Migrations
                     { (short)1, (short)100, "PersonID", "int", null, "Person ID", false, null, (short)3 },
                     { (short)1, (short)100, "SpecialGroupID", "int", null, "Special Group ID", false, null, (short)100 },
                     { (short)1, (short)404, "EmployeeID", "int", null, "Employee ID", true, null, (short)0 },
-                    { (short)1, (short)700, "Path", "string", "D:\\Git Workspace\\Personal\\Aerish\\Docs\\Sample Imports", "File Path", true, null, (short)0 }
+                    { (short)1, (short)700, "Path", "string", "D:\\Git Workspace\\Personal\\Aerish\\Docs\\Sample Imports\\PERSON_05_03_2021.csv", "File Path", true, null, (short)0 },
+                    { (short)1, (short)710, "Path", "string", "D:\\Git Workspace\\Personal\\Aerish\\Docs\\Sample Imports\\BASICPAY_05_03_2021.csv", "File Path", true, null, (short)0 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -1789,6 +1826,12 @@ namespace Aerish.DbMigration.SqlServer.Migrations
                 column: "ProcessInstanceID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_tbl_StagingBasicPay_ProcessInstanceID",
+                schema: "stg",
+                table: "tbl_StagingBasicPay",
+                column: "ProcessInstanceID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_tbl_StagingPerson_ProcessInstanceID",
                 schema: "stg",
                 table: "tbl_StagingPerson",
@@ -1870,6 +1913,10 @@ namespace Aerish.DbMigration.SqlServer.Migrations
             migrationBuilder.DropTable(
                 name: "tbl_SpecialGroupMember",
                 schema: "cd");
+
+            migrationBuilder.DropTable(
+                name: "tbl_StagingBasicPay",
+                schema: "stg");
 
             migrationBuilder.DropTable(
                 name: "tbl_StagingPerson",

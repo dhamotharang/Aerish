@@ -9,6 +9,7 @@ using Aerish.Domain.Entities.Parameters;
 using Aerish.Domain.Entities.Common;
 using Aerish.Domain.Entities.CalcData;
 using Aerish.Domain.Entities.Staging;
+using Aerish.Application.Common.Entities.Staging;
 
 /*
 Do not modify this file! This is auto generated!
@@ -66,6 +67,7 @@ namespace Aerish.Interfaces
 		IQueryable<PlanYear> PlanYears { get; }
 		IQueryable<Table> Tables { get; }
 		IQueryable<TableRange> TableRanges { get; }
+		IQueryable<StagingBasicPay> StagingBasicPays { get; }
 		IQueryable<StagingPerson> StagingPersons { get; }
 		IQueryable<ValidationFailure> ValidationFailures { get; }
         #endregion

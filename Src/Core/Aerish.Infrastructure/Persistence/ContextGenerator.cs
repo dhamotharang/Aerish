@@ -12,6 +12,7 @@ using Aerish.Domain.Entities.Parameters;
 using Aerish.Domain.Entities.Common;
 using Aerish.Domain.Entities.CalcData;
 using Aerish.Domain.Entities.Staging;
+using Aerish.Application.Common.Entities.Staging;
 
 /*
 Do not modify this file! This is auto generated!
@@ -284,6 +285,12 @@ namespace Aerish.Infrastructure.Persistence
 			get { return db_TableRanges; }
 			private set { db_TableRanges = (DbSet<TableRange>)value; }
 		}
+		private DbSet<StagingBasicPay> db_StagingBasicPays { get; set; }
+		public IQueryable<StagingBasicPay> StagingBasicPays 
+		{ 
+			get { return db_StagingBasicPays; }
+			private set { db_StagingBasicPays = (DbSet<StagingBasicPay>)value; }
+		}
 		private DbSet<StagingPerson> db_StagingPersons { get; set; }
 		public IQueryable<StagingPerson> StagingPersons 
 		{ 
@@ -352,6 +359,7 @@ namespace Aerish.Infrastructure.Persistence.Configurations
 	public partial class PlanYear_Configuration : BaseConfiguration<PlanYear> { }
 	public partial class Table_Configuration : BaseConfiguration<Table> { }
 	public partial class TableRange_Configuration : BaseConfiguration<TableRange> { }
+	public partial class StagingBasicPay_Configuration : BaseConfiguration<StagingBasicPay> { }
 	public partial class StagingPerson_Configuration : BaseConfiguration<StagingPerson> { }
 	public partial class ValidationFailure_Configuration : BaseConfiguration<ValidationFailure> { }
     #endregion

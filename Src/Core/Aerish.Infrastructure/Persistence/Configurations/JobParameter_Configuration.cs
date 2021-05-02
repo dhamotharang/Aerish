@@ -106,12 +106,23 @@ namespace Aerish.Infrastructure.Persistence.Configurations
             builder.HasData(new JobParameter
             {
                 ClientID = ClientConstant.Default,
-                JobID = 700,
+                JobID = MainConstants.Job.ImportPerson,
                 Name = "Path",
                 Display = "File Path",
                 DataType = InputDataTypeConstants.String,
                 IsRequired = true,
-                DefaultValue = @"D:\Git Workspace\Personal\Aerish\Docs\Sample Imports"
+                DefaultValue = @"D:\Git Workspace\Personal\Aerish\Docs\Sample Imports\PERSON_05_03_2021.csv"
+            });
+
+            builder.HasData(new JobParameter
+            {
+                ClientID = ClientConstant.Default,
+                JobID = MainConstants.Job.ImportBasicPay,
+                Name = "Path",
+                Display = "File Path",
+                DataType = InputDataTypeConstants.String,
+                IsRequired = true,
+                DefaultValue = @"D:\Git Workspace\Personal\Aerish\Docs\Sample Imports\BASICPAY_05_03_2021.csv"
             });
         }
     }

@@ -19,6 +19,64 @@ namespace Aerish.DbMigration.SqlServer.Migrations
                 .HasAnnotation("ProductVersion", "5.0.5")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Aerish.Application.Common.Entities.Staging.StagingBasicPay", b =>
+                {
+                    b.Property<long>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("DECIMAL(20,6)");
+
+                    b.Property<string>("Basis")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Effectivity")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EmployeeSysID")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<int?>("Err_ColumnIndex")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Err_UnmappedRow")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Err_Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("ImportIsValid")
+                        .HasColumnType("bit");
+
+                    b.Property<byte>("LoadStatus")
+                        .HasColumnType("tinyint");
+
+                    b.Property<string>("PeriodEnd")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PeriodStart")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProcessInstanceID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RowIndex")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("ValidationIsValid")
+                        .HasColumnType("bit");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ProcessInstanceID");
+
+                    b.ToTable("tbl_StagingBasicPay", "stg");
+                });
+
             modelBuilder.Entity("Aerish.Domain.Entities.CalcData.MasterEmployee", b =>
                 {
                     b.Property<int>("EmployeeID")
@@ -1199,7 +1257,13 @@ namespace Aerish.DbMigration.SqlServer.Migrations
                         {
                             ID = 2000,
                             TaskAssembly = "Aerish, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-                            TaskClass = "Aerish.Imports.Commands.ImportPersonCmd"
+                            TaskClass = "Aerish.Commands.Imports.ImportPersonCmd"
+                        },
+                        new
+                        {
+                            ID = 2001,
+                            TaskAssembly = "Aerish, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                            TaskClass = "Aerish.Commands.Imports.ImportBasicPayCmd"
                         },
                         new
                         {
@@ -1608,6 +1672,15 @@ namespace Aerish.DbMigration.SqlServer.Migrations
                             LongDesc = "Import Person Data",
                             ShortDesc = "Import Person Data",
                             TaskHandlerProviderID = 2000
+                        },
+                        new
+                        {
+                            ClientID = (short)1,
+                            JobID = (short)710,
+                            IsEnabled = true,
+                            LongDesc = "Import Basic Pay Data",
+                            ShortDesc = "Import Basic Pay Data",
+                            TaskHandlerProviderID = 2001
                         });
                 });
 
@@ -1708,7 +1781,18 @@ namespace Aerish.DbMigration.SqlServer.Migrations
                             JobID = (short)700,
                             Name = "Path",
                             DataType = "string",
-                            DefaultValue = "D:\\Git Workspace\\Personal\\Aerish\\Docs\\Sample Imports",
+                            DefaultValue = "D:\\Git Workspace\\Personal\\Aerish\\Docs\\Sample Imports\\PERSON_05_03_2021.csv",
+                            Display = "File Path",
+                            IsRequired = true,
+                            Order = (short)0
+                        },
+                        new
+                        {
+                            ClientID = (short)1,
+                            JobID = (short)710,
+                            Name = "Path",
+                            DataType = "string",
+                            DefaultValue = "D:\\Git Workspace\\Personal\\Aerish\\Docs\\Sample Imports\\BASICPAY_05_03_2021.csv",
                             Display = "File Path",
                             IsRequired = true,
                             Order = (short)0
@@ -2706,8 +2790,8 @@ namespace Aerish.DbMigration.SqlServer.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime?>("Birthdate")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Birthdate")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EmployeeSysID")
                         .IsRequired()
@@ -2726,8 +2810,8 @@ namespace Aerish.DbMigration.SqlServer.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte?>("Gender")
-                        .HasColumnType("tinyint");
+                    b.Property<string>("Gender")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("ImportIsValid")
                         .HasColumnType("bit");
@@ -2786,6 +2870,17 @@ namespace Aerish.DbMigration.SqlServer.Migrations
                     b.HasKey("ValidationFailureID");
 
                     b.ToTable("tbl_ValidationFailure", "stg");
+                });
+
+            modelBuilder.Entity("Aerish.Application.Common.Entities.Staging.StagingBasicPay", b =>
+                {
+                    b.HasOne("Aerish.Domain.Entities.Common.ProcessInstance", "N_JobInstance")
+                        .WithMany()
+                        .HasForeignKey("ProcessInstanceID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("N_JobInstance");
                 });
 
             modelBuilder.Entity("Aerish.Domain.Entities.CalcData.MasterEmployee", b =>

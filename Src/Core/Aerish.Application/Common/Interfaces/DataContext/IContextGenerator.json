@@ -6,7 +6,8 @@
       "Aerish.Domain.Entities.Parameters",
       "Aerish.Domain.Entities.Common",
       "Aerish.Domain.Entities.CalcData",
-      "Aerish.Domain.Entities.Staging"
+      "Aerish.Domain.Entities.Staging",
+      "Aerish.Application.Common.Entities.Staging"
     ],
     "ExcludedFiles": [
       "../../../Common/Entities/Base/BaseEntity.cs",

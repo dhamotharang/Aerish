@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 
 using Aerish.Application;
+using Aerish.Commands.Imports;
 using Aerish.Commands.JobInstanceCmds;
 using Aerish.Constants;
 using Aerish.DbMigration.InMemoryDatabase;

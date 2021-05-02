@@ -33,6 +33,7 @@ namespace Aerish.Constants
         public const int MainCalc = 1000;
         public const int RollbackCalc = 1001;
         public const int ImportPerson = 2000;
+        public const int ImportBasicPay = 2001;
         #endregion
     }
 }

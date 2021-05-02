@@ -8,6 +8,7 @@
         {
             public const short MainCalc = 100;
             public const short ImportPerson = 700;
+            public const short ImportBasicPay = 710;
 
 
 

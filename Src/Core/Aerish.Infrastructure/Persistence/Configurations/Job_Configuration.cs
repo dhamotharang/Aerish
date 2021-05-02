@@ -2,7 +2,6 @@
 using Aerish.Commands.CalcCmds;
 using Aerish.Constants;
 using Aerish.Domain.Entities.Parameters;
-using Aerish.Imports.Commands;
 using Aerish.Infrastructure.Constants;
 
 namespace Aerish.Infrastructure.Persistence.Configurations
@@ -72,6 +71,16 @@ namespace Aerish.Infrastructure.Persistence.Configurations
                 LongDesc = "Import Person Data",
                 IsEnabled = true,
                 TaskHandlerProviderID = TaskHandlerProviderConstants.ImportPerson
+            });
+
+            builder.HasData(new Job
+            {
+                ClientID = ClientConstant.Default,
+                JobID = MainConstants.Job.ImportBasicPay,
+                ShortDesc = "Import Basic Pay Data",
+                LongDesc = "Import Basic Pay Data",
+                IsEnabled = true,
+                TaskHandlerProviderID = TaskHandlerProviderConstants.ImportBasicPay
             });
         }
     }

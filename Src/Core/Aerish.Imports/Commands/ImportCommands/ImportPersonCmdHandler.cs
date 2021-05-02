@@ -22,6 +22,7 @@ using TinyCsvParser.Mapping;
 using AutoMapper.QueryableExtensions;
 using Aerish.Domain.Entities.Common;
 using Microsoft.Extensions.Caching.Memory;
+using Aerish.Commands.Imports;
 
 namespace Aerish.Imports.Commands.ImportCommands
 {
@@ -29,16 +30,14 @@ namespace Aerish.Imports.Commands.ImportCommands
     {
         private readonly IMapper p_Mapper;
         private readonly IAerishDbContext p_DbContext;
-        private readonly DbContext p_BaseDbContext;
         private readonly IAppSession p_AppSession;
         private readonly Dictionary<int, IEnumerable<ValidationFailureBO>> errorsPerRow = new Dictionary<int, IEnumerable<ValidationFailureBO>>();
         private List<string> TaxNumbers = null;
 
-        public ImportPersonCmdHandler(IMapper mapper, IAerishDbContext dbContext, DbContext baseDbContext, IAppSession appSession)
+        public ImportPersonCmdHandler(IMapper mapper, IAerishDbContext dbContext, IAppSession appSession)
         {
             p_Mapper = mapper;
             p_DbContext = dbContext;
-            p_BaseDbContext = baseDbContext;
             p_AppSession = appSession;
         }
 
@@ -120,7 +119,7 @@ namespace Aerish.Imports.Commands.ImportCommands
 
             try
             {
-                p_BaseDbContext.BulkSaveChanges();
+                p_DbContext.BulkSaveChanges();
             }
             catch (Exception ex)
             {
@@ -165,8 +164,8 @@ namespace Aerish.Imports.Commands.ImportCommands
                         FirstName = key.FirstName,
                         MiddleName = key.MiddleName,
                         LastName = key.LastName,
-                        Birthdate = key.Birthdate,
-                        Gender = key.Gender
+                        Birthdate = CommonUtility.DateTimeUtility.ParseDateTime(key.Birthdate),
+                        Gender = CommonUtility.EnumUtility.TryParseEnumOrNull<Gender>(key.Gender)
                     }
                 });
             }

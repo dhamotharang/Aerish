@@ -8,10 +8,10 @@ using Aerish.Commands.CalcCmds;
 using Aerish.Commands.DeductionCmds.Contributions;
 using Aerish.Commands.DeductionCmds.Deductions;
 using Aerish.Commands.EarningCmds.Earnings;
+using Aerish.Commands.Imports;
 using Aerish.Commands.LoanCmds.CompanyLoans;
 using Aerish.Constants;
 using Aerish.Domain.Entities.Common;
-using Aerish.Imports.Commands;
 
 namespace Aerish.Infrastructure.Persistence.Configurations
 {
@@ -119,6 +119,13 @@ namespace Aerish.Infrastructure.Persistence.Configurations
                 ID = TaskHandlerProviderConstants.ImportPerson,
                 TaskAssembly = typeof(ImportPersonCmd).Assembly.FullName,
                 TaskClass = typeof(ImportPersonCmd).FullName
+            });
+
+            builder.HasData(new TaskHandlerProvider
+            {
+                ID = TaskHandlerProviderConstants.ImportBasicPay,
+                TaskAssembly = typeof(ImportBasicPayCmd).Assembly.FullName,
+                TaskClass = typeof(ImportBasicPayCmd).FullName
             });
 
 
